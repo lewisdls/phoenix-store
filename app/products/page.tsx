@@ -167,7 +167,7 @@ export default function Products() {
         </DropdownMenu>
       </div>
       <div className="flex flex-col md:flex-row gap-4 md:gap-10">
-        <div className="grid grid-cols-2 md:flex md:flex-col md:w-1/6">
+        <div className="flex flex-col md:w-1/6">
           <div className="flex flex-col gap-2 py-6 md:border-b-[1px] border-b-slate-200">
             {categories.map((category) => (
               <span
