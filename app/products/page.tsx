@@ -21,7 +21,7 @@ import { imageUrl } from "@/lib/imgUrl";
 import { Category, Product } from "@/sanity.types";
 import Badge from "@/components/badge";
 import { getColorsHex } from "@/lib/colorByHex";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const sortings = [
   { name: "None", value: "none" },
@@ -53,7 +53,6 @@ export default function Products() {
     [key: string]: string;
   }>({});
   const [name, setName] = useState<string>("");
-  const params = useSearchParams();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
