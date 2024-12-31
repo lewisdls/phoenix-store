@@ -99,11 +99,11 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <div className="flex flex-col px-8 gap-8">
+          <div className="flex flex-col px-4 md:px-8 gap-8">
             <h2 className="text-3xl text-center md:text-left font-medium pb-3 border-b">
               Trending Products
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:flex items-center justify-center w-full gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:flex items-center justify-center w-full gap-10 md:gap-4">
               {trendingProducts.slice(-4).map((product) => (
                 <ProductCard
                   key={product._id}
@@ -123,15 +123,15 @@ export default function Home() {
             </div>
           </div>
           <div className="flex flex-col gap-8 mb-14">
-            <h2 className="mx-8 text-3xl text-center md:text-left font-medium pb-3 border-b">
+            <h2 className="mx-4 md:mx-8 text-3xl text-center md:text-left font-medium pb-3 border-b">
               Categories
             </h2>
-            <div className="grid grid-cols-4 grid-rows-2 w-full gap-3 h-[600px]">
+            <div className="grid grid-cols-1 md:grid-cols-4 w-full gap-3 md:h-[600px]">
               {categories.map((category, index) => (
                 <Link
                   key={category._id}
                   href={`/products?category=${category._id}`}
-                  className={`w-full relative overflow-hidden ${index == 1 ? "row-span-2" : index == categories.length - 1 && "col-span-2"}`}
+                  className={`w-full h-40 md:h-auto relative overflow-hidden ${index == 1 ? "md:row-span-2" : index == categories.length - 1 && "md:col-span-2"}`}
                 >
                   <img
                     src={imageUrl(category.image || "").url()}
