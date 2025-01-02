@@ -86,10 +86,10 @@ export default function Product() {
   return (
     <div>
       {!isLoading ? (
-        <div className="flex flex-col gap-8 py-10">
-          <div className="flex items-center justify-center gap-10 ">
-            <div className="flex gap-4 h-full">
-              <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-8 px-4 md:px-0 py-10">
+          <div className="flex flex-col md:flex-row justify-center gap-10 ">
+            <div className="flex flex-col-reverse md:flex-row gap-4 h-full">
+              <div className="flex flex-row justify-center md:flex-col md:justify-start gap-3">
                 {product?.images
                   ?.filter((img) => img.color === selectedColor)[0]
                   ?.images?.map((image) => (
@@ -110,14 +110,14 @@ export default function Product() {
                     </div>
                   ))}
               </div>
-              <div className="w-[500px] h-[800px] relative">
+              <div className="w-full h-[500px] md:w-[500px] md:h-[800px] relative">
                 {product?.images?.map((img) =>
                   img.images?.map((image) => (
                     <img
                       key={image._key}
                       src={imageUrl(image).url()}
                       alt=""
-                      className={`absolute object-cover w-full rounded-lg transition-opacity duration-300 ${
+                      className={`absolute object-cover w-full h-full rounded-lg transition-opacity duration-300 ${
                         mainImg === imageUrl(image).url()
                           ? "opacity-100"
                           : "opacity-0 pointer-events-none"
@@ -127,7 +127,7 @@ export default function Product() {
                 )}
               </div>
             </div>
-            <div className="w-1/3">
+            <div className="md:w-1/3">
               <h1 className="font-semibold text-4xl leading-tight">
                 {product?.title}
               </h1>
@@ -254,11 +254,11 @@ export default function Product() {
             </div>
           </div>
           {similarProducts.length > 0 && (
-            <div className="mx-8 flex flex-col gap-8">
+            <div className="md:mx-8 flex flex-col gap-8">
               <h2 className="text-3xl text-center md:text-left font-medium pb-3 border-b">
                 Similar Products
               </h2>
-              <div className="grid grid-cols-5 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
                 {similarProducts.slice(-5).map((similar) => (
                   <ProductCard
                     key={similar._id}
