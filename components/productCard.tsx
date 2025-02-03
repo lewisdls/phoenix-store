@@ -19,9 +19,7 @@ const ProductCard = ({
   return (
     <div className="">
       <Link href={`/products/${slug?.current}`} className="">
-        <div
-          className={`h-[400px] lg:w-[275px] overflow-hidden rounded-lg relative`}
-        >
+        <div className={`h-[400px] overflow-hidden rounded-lg relative`}>
           {images?.map((img) => (
             <img
               key={img.color}
@@ -37,7 +35,7 @@ const ProductCard = ({
           {isTrending && <Badge text="Trending" className="" />}
         </div>
       </Link>
-      <div className="flex justify-between mt-3">
+      <div className="flex justify-between mt-3 w-full">
         <h3>{title}</h3>
         <span className="font-semibold">${price}</span>
       </div>

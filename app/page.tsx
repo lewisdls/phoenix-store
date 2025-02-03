@@ -103,8 +103,8 @@ export default function Home() {
             <h2 className="text-3xl text-center md:text-left font-medium pb-3 border-b">
               Trending Products
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:flex items-center justify-center w-full gap-10 md:gap-4">
-              {trendingProducts.slice(-4).map((product) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 justify-center w-full gap-10 md:gap-4">
+              {trendingProducts.slice(-5).map((product) => (
                 <ProductCard
                   key={product._id}
                   title={product.title}

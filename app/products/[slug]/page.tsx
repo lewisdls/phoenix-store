@@ -85,7 +85,80 @@ export default function Product() {
 
   return (
     <div>
-      {!isLoading ? (
+      {isLoading ? (
+        <div className="flex flex-col gap-8 px-4 md:px-0 py-10">
+          <div className="flex flex-col md:flex-row justify-center gap-10 ">
+            <div className="flex flex-col-reverse md:flex-row gap-4 h-full">
+              <div className="flex flex-row justify-center md:flex-col md:justify-start gap-3">
+                {Array(4)
+                  .fill(0)
+                  .map((_, index) => (
+                    <div
+                      key={index}
+                      className={`w-[100px] rounded-lg animate-pulse`}
+                    >
+                      <div className="h-[140px] bg-gray-200 rounded-lg"></div>
+                    </div>
+                  ))}
+              </div>
+              <div className="w-full h-[500px] md:w-[500px] rounded-lg md:h-[800px] relative">
+                <div className={`bg-gray-200 w-full h-full rounded-lg`} />
+              </div>
+            </div>
+            <div className="md:w-1/3 flex flex-col gap-4">
+              <div className="w-3/4 h-10 bg-gray-200 rounded"></div>
+              <div className="w-1/4 h-8 bg-gray-200 rounded"></div>
+              <div className="flex flex-col gap-2">
+                <div className="w-1/2 h-4 bg-gray-200 rounded"></div>
+                <div className="w-1/2 h-4 bg-gray-200 rounded"></div>
+                <div className="w-1/2 h-4 bg-gray-200 rounded"></div>
+                <div className="w-1/2 h-4 bg-gray-200 rounded"></div>
+              </div>
+              <div className="mt-6 pb-6">
+                <div className="w-1/4 h-8 bg-gray-200 rounded"></div>
+                <div className="flex items-center gap-2 mt-4">
+                  <div className={`h-6 w-1/5 rounded bg-gray-200`}></div>
+                  <div className={`h-6 w-1/5 rounded bg-gray-200`}></div>
+                  <div className={`h-6 w-1/5 rounded bg-gray-200`}></div>
+                </div>
+              </div>
+              <div className="">
+                <div className="w-1/4 h-8 bg-gray-200 rounded"></div>
+                <div className="flex items-center gap-2 mt-4">
+                  <div className={`h-8 w-8 rounded-full bg-gray-200`}></div>
+                  <div className={`h-8 w-8 rounded-full bg-gray-200`}></div>
+                  <div className={`h-8 w-8 rounded-full bg-gray-200`}></div>
+                  <div className={`h-8 w-8 rounded-full bg-gray-200`}></div>
+                </div>
+              </div>
+              <div className="hidden md:block mt-6 pb-6">
+                <div className="w-1/4 h-8 bg-gray-200 rounded"></div>
+                <div className="flex items-center gap-2 mt-4">
+                  <div className={`h-6 w-1/5 rounded bg-gray-200`}></div>
+                  <div className={`h-6 w-1/5 rounded bg-gray-200`}></div>
+                  <div className={`h-6 w-1/5 rounded bg-gray-200`}></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="md:mx-8 flex flex-col gap-8">
+            <div className="w-48 h-10 bg-gray-200 rounded"></div>
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+              {Array(5)
+                .fill(0)
+                .map((_, index) => (
+                  <div key={index} className="w-full animate-pulse">
+                    <div className="h-[400px] bg-gray-200 rounded-lg"></div>
+                    <div className="mt-3 flex justify-between">
+                      <div className="w-1/2 h-4 bg-gray-200 rounded"></div>
+                      <div className="w-1/4 h-4 bg-gray-200 rounded"></div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+        </div>
+      ) : (
         <div className="flex flex-col gap-8 px-4 md:px-0 py-10">
           <div className="flex flex-col md:flex-row justify-center gap-10 ">
             <div className="flex flex-col-reverse md:flex-row gap-4 h-full">
@@ -279,8 +352,6 @@ export default function Product() {
             </div>
           )}
         </div>
-      ) : (
-        <p>Loading...</p>
       )}
     </div>
   );

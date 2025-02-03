@@ -167,106 +167,122 @@ export default function Products() {
         </DropdownMenu>
       </div>
       <div className="flex flex-col md:flex-row gap-4 md:gap-10">
-        <div className="flex flex-col md:w-1/6">
-          <div className="flex flex-col gap-2 py-6 md:border-b-[1px] border-b-slate-200">
-            {categories.map((category) => (
-              <span
-                key={category._id}
-                className={`cursor-pointer w-fit py-1 rounded-md transition-all ${
-                  selectedCategory === category._id &&
-                  "flex items-center gap-2 text-white bg-blue-500 px-2"
-                }`}
-                onClick={() =>
-                  setSelectedCategory((prev) => {
-                    if (!prev.includes(category._id)) {
-                      return category._id;
-                    } else {
-                      return "";
-                    }
-                  })
-                }
-              >
-                {category.title}
-                {selectedCategory === category._id && <IoMdClose />}
-              </span>
-            ))}
+        {isLoading ? (
+          <div className="md:w-1/6">
+            <div className="flex flex-col gap-4 py-6">
+              <div className="w-2/3 h-6 bg-gray-200 rounded"></div>
+              <div className="w-2/3 h-6 bg-gray-200 rounded"></div>
+              <div className="w-2/3 h-6 bg-gray-200 rounded"></div>
+              <div className="w-2/3 h-6 bg-gray-200 rounded"></div>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="w-full h-6 bg-gray-200 rounded"></div>
+              <div className="w-full h-6 bg-gray-200 rounded"></div>
+              <div className="w-full h-6 bg-gray-200 rounded"></div>
+            </div>
           </div>
-          <Accordion type="single" collapsible>
-            <AccordionItem value="item-1">
-              <AccordionTrigger className="font-semibold">
-                Color
-              </AccordionTrigger>
-              <AccordionContent className="flex flex-col gap-2">
-                {colors.map((color) => (
-                  <div
-                    key={color.value}
-                    className="cursor-pointer flex items-center gap-2 w-fit"
-                    onClick={() =>
-                      setSelectedColors((prev) => {
-                        if (!prev.includes(color.name)) {
-                          return [...prev, color.name];
-                        } else {
-                          return prev.filter((c) => c !== color.name);
-                        }
-                      })
-                    }
-                  >
-                    <input
-                      type="checkbox"
-                      name=""
-                      id=""
-                      className="cursor-pointer"
-                      checked={selectedColors.includes(color.name)}
-                      readOnly
-                    />
-                    <label className="cursor-pointer">{color.name}</label>
-                  </div>
-                ))}
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-2">
-              <AccordionTrigger className="font-semibold">
-                Size
-              </AccordionTrigger>
-              <AccordionContent className="flex flex-col gap-2">
-                {sizes.map((size) => (
-                  <div
-                    key={size}
-                    className="cursor-pointer flex items-center gap-2 w-fit"
-                    onClick={() =>
-                      setSelectedSizes((prev) => {
-                        if (!prev.includes(size)) {
-                          return [...prev, size];
-                        } else {
-                          return prev.filter((c) => c !== size);
-                        }
-                      })
-                    }
-                  >
-                    <input
-                      type="checkbox"
-                      name=""
-                      id=""
-                      className="cursor-pointer"
-                      checked={selectedSizes.includes(size)}
-                      readOnly
-                    />
-                    <label className="cursor-pointer">{size}</label>
-                  </div>
-                ))}
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-          <div className="flex flex-col gap-3 py-4 border-b">
-            <h2 className="font-semibold">Search</h2>
-            <input
-              type="text"
-              placeholder="Product name"
-              className="border border-slate-300 px-3 py-2 rounded-md text-sm placeholder:font-light outline-none transition-all focus:border-slate-500 w-full"
-              onChange={(e) => setName(e.target.value)}
-            />
+        ) : (
+          <div className="flex flex-col md:w-1/6">
+            <div className="flex flex-col gap-2 py-6 md:border-b-[1px] border-b-slate-200">
+              {categories.map((category) => (
+                <span
+                  key={category._id}
+                  className={`cursor-pointer w-fit py-1 rounded-md transition-all ${
+                    selectedCategory === category._id &&
+                    "flex items-center gap-2 text-white bg-blue-500 px-2"
+                  }`}
+                  onClick={() =>
+                    setSelectedCategory((prev) => {
+                      if (!prev.includes(category._id)) {
+                        return category._id;
+                      } else {
+                        return "";
+                      }
+                    })
+                  }
+                >
+                  {category.title}
+                  {selectedCategory === category._id && <IoMdClose />}
+                </span>
+              ))}
+            </div>
+            <Accordion type="single" collapsible>
+              <AccordionItem value="item-1">
+                <AccordionTrigger className="font-semibold">
+                  Color
+                </AccordionTrigger>
+                <AccordionContent className="flex flex-col gap-2">
+                  {colors.map((color) => (
+                    <div
+                      key={color.value}
+                      className="cursor-pointer flex items-center gap-2 w-fit"
+                      onClick={() =>
+                        setSelectedColors((prev) => {
+                          if (!prev.includes(color.name)) {
+                            return [...prev, color.name];
+                          } else {
+                            return prev.filter((c) => c !== color.name);
+                          }
+                        })
+                      }
+                    >
+                      <input
+                        type="checkbox"
+                        name=""
+                        id=""
+                        className="cursor-pointer"
+                        checked={selectedColors.includes(color.name)}
+                        readOnly
+                      />
+                      <label className="cursor-pointer">{color.name}</label>
+                    </div>
+                  ))}
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-2">
+                <AccordionTrigger className="font-semibold">
+                  Size
+                </AccordionTrigger>
+                <AccordionContent className="flex flex-col gap-2">
+                  {sizes.map((size) => (
+                    <div
+                      key={size}
+                      className="cursor-pointer flex items-center gap-2 w-fit"
+                      onClick={() =>
+                        setSelectedSizes((prev) => {
+                          if (!prev.includes(size)) {
+                            return [...prev, size];
+                          } else {
+                            return prev.filter((c) => c !== size);
+                          }
+                        })
+                      }
+                    >
+                      <input
+                        type="checkbox"
+                        name=""
+                        id=""
+                        className="cursor-pointer"
+                        checked={selectedSizes.includes(size)}
+                        readOnly
+                      />
+                      <label className="cursor-pointer">{size}</label>
+                    </div>
+                  ))}
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+            <div className="flex flex-col gap-3 py-4 border-b">
+              <h2 className="font-semibold">Search</h2>
+              <input
+                type="text"
+                placeholder="Product name"
+                className="border border-slate-300 px-3 py-2 rounded-md text-sm placeholder:font-light outline-none transition-all focus:border-slate-500 w-full"
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
           </div>
-        </div>
+        )}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-6 pb-8 md:py-6 md:w-5/6">
           {isLoading ? (
             Array(8)
