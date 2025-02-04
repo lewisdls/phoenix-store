@@ -1,5 +1,6 @@
 "use client";
 
+import Brands from "@/components/brands";
 import ProductCard from "@/components/productCard";
 import { imageUrl } from "@/lib/imgUrl";
 import { Category, Header, Product } from "@/sanity.types";
@@ -122,6 +123,7 @@ export default function Home() {
               ))}
             </div>
           </div>
+          <Brands />
           <div className="flex flex-col gap-8 mb-14">
             <h2 className="mx-4 md:mx-8 text-3xl text-center md:text-left font-medium pb-3 border-b">
               Categories
