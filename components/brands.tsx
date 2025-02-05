@@ -2,7 +2,7 @@ import React from "react";
 
 const Brands = () => {
   return (
-    <div className="overflow-hidden h-[50px] my-8">
+    <div className="hidden lg:block overflow-hidden h-[50px] my-8">
       <div className="relative">
         <img
           src={`/zara.png`}

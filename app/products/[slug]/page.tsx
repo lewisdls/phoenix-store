@@ -13,14 +13,6 @@ import { getColorsHex } from "@/lib/colorByHex";
 
 const sizes = ["Small", "Medium", "Large"];
 
-type Item = {
-  id: number;
-  name: string;
-  price: number;
-  amount: number;
-  image: string;
-};
-
 export default function Product() {
   const [isLoading, setIsLoading] = useState(true);
   const params = useParams();
@@ -264,7 +256,10 @@ export default function Product() {
                             ? "border-black scale-110"
                             : "border-gray-300 hover:scale-105 hover:border-gray-500"
                       }`}
-                      onClick={() => setSelectedColor(img.color || "")}
+                      onClick={() => {
+                        setSelectedColor(img.color || "");
+                        setCounter(1);
+                      }}
                       disabled={!isInStock(selectedSize, img.color || "")}
                     >
                       <Tooltip text={img.color || ""}>
