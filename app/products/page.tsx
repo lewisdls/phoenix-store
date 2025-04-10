@@ -196,9 +196,9 @@ export default function Products() {
               {categories.map((category) => (
                 <span
                   key={category._id}
-                  className={`cursor-pointer w-fit md:py-1 rounded-md transition-all ${
+                  className={`cursor-pointer w-fit py-1 rounded-md transition-all ${
                     selectedCategory === category._id &&
-                    "flex items-center flex-nowrap gap-2 text-white bg-blue-500 md:px-2"
+                    "flex items-center flex-nowrap gap-2 text-white bg-blue-500 px-2"
                   }`}
                   onClick={() =>
                     setSelectedCategory((prev) => {
