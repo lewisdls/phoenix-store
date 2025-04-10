@@ -52,6 +52,7 @@ export default function Products() {
   const [selectedProductColors, setSelectedProductColors] = useState<{
     [key: string]: string;
   }>({});
+  const [selectedFilter, setSelectedFilter] = useState<string>("Categories");
   const [name, setName] = useState<string>("");
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -167,29 +168,37 @@ export default function Products() {
         </DropdownMenu>
       </div>
       <div className="flex flex-col md:flex-row gap-4 md:gap-10">
-        {isLoading ? (
-          <div className="md:w-1/6">
-            <div className="flex flex-col gap-4 py-6">
-              <div className="w-2/3 h-6 bg-gray-200 rounded"></div>
-              <div className="w-2/3 h-6 bg-gray-200 rounded"></div>
-              <div className="w-2/3 h-6 bg-gray-200 rounded"></div>
-              <div className="w-2/3 h-6 bg-gray-200 rounded"></div>
-            </div>
-            <div className="flex flex-col gap-4">
-              <div className="w-full h-6 bg-gray-200 rounded"></div>
-              <div className="w-full h-6 bg-gray-200 rounded"></div>
-              <div className="w-full h-6 bg-gray-200 rounded"></div>
-            </div>
+        <div className="flex flex-col md:w-1/6">
+          <div className="space-x-2 my-4 md:hidden">
+            <span
+              className={`px-2 py-1 rounded-md cursor-pointer ${selectedFilter === "Categories" ? "bg-blue-100 font-semibold" : "bg-gray-100 font-normal"}`}
+              onClick={() => setSelectedFilter("Categories")}
+            >
+              Categories
+            </span>
+            <span
+              className={`px-2 py-1 rounded-md cursor-pointer ${selectedFilter === "Colors" ? "bg-blue-100 font-semibold" : "bg-gray-100 font-normal"}`}
+              onClick={() => setSelectedFilter("Colors")}
+            >
+              Colors
+            </span>
+            <span
+              className={`px-2 py-1 rounded-md cursor-pointer ${selectedFilter === "Sizes" ? "bg-blue-100 font-semibold" : "bg-gray-100 font-normal"}`}
+              onClick={() => setSelectedFilter("Sizes")}
+            >
+              Sizes
+            </span>
           </div>
-        ) : (
-          <div className="flex flex-col md:w-1/6">
-            <div className="flex flex-col gap-2 py-6 md:border-b-[1px] border-b-slate-200">
+          <div
+            className={`md:overflow-auto overflow-x-scroll ${selectedFilter !== "Categories" ? "hidden" : "block"}`}
+          >
+            <div className="flex md:flex-col gap-4 md:gap-2 pb-2 md:py-6 md:border-b-[1px] border-b-slate-200 w-max md:w-full">
               {categories.map((category) => (
                 <span
                   key={category._id}
-                  className={`cursor-pointer w-fit py-1 rounded-md transition-all ${
+                  className={`cursor-pointer w-fit md:py-1 rounded-md transition-all ${
                     selectedCategory === category._id &&
-                    "flex items-center gap-2 text-white bg-blue-500 px-2"
+                    "flex items-center flex-nowrap gap-2 text-white bg-blue-500 md:px-2"
                   }`}
                   onClick={() =>
                     setSelectedCategory((prev) => {
@@ -206,93 +215,151 @@ export default function Products() {
                 </span>
               ))}
             </div>
-            <Accordion type="single" collapsible>
-              <AccordionItem value="item-1">
-                <AccordionTrigger className="font-semibold">
-                  Color
-                </AccordionTrigger>
-                <AccordionContent className="flex flex-col gap-2">
-                  {colors.map((color) => (
-                    <div
-                      key={color.value}
-                      className="cursor-pointer flex items-center gap-2 w-fit"
-                      onClick={() =>
-                        setSelectedColors((prev) => {
-                          if (!prev.includes(color.name)) {
-                            return [...prev, color.name];
-                          } else {
-                            return prev.filter((c) => c !== color.name);
-                          }
-                        })
-                      }
-                    >
-                      <input
-                        type="checkbox"
-                        name=""
-                        id=""
-                        className="cursor-pointer"
-                        checked={selectedColors.includes(color.name)}
-                        readOnly
-                      />
-                      <label className="cursor-pointer">{color.name}</label>
-                    </div>
-                  ))}
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-2">
-                <AccordionTrigger className="font-semibold">
-                  Size
-                </AccordionTrigger>
-                <AccordionContent className="flex flex-col gap-2">
-                  {sizes.map((size) => (
-                    <div
-                      key={size}
-                      className="cursor-pointer flex items-center gap-2 w-fit"
-                      onClick={() =>
-                        setSelectedSizes((prev) => {
-                          if (!prev.includes(size)) {
-                            return [...prev, size];
-                          } else {
-                            return prev.filter((c) => c !== size);
-                          }
-                        })
-                      }
-                    >
-                      <input
-                        type="checkbox"
-                        name=""
-                        id=""
-                        className="cursor-pointer"
-                        checked={selectedSizes.includes(size)}
-                        readOnly
-                      />
-                      <label className="cursor-pointer">{size}</label>
-                    </div>
-                  ))}
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-            <div className="flex flex-col gap-3 py-4 border-b">
-              <h2 className="font-semibold">Search</h2>
-              <input
-                type="text"
-                placeholder="Product name"
-                className="border border-slate-300 px-3 py-2 rounded-md text-sm placeholder:font-light outline-none transition-all focus:border-slate-500 w-full"
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
           </div>
-        )}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-6 pb-8 md:py-6 md:w-5/6">
+          <div
+            className={`md:hidden md:flex-col gap-2 pb-2 md:py-6 md:border-b-[1px] border-b-slate-200 overflow-x-scroll ${selectedFilter !== "Colors" ? "hidden md:flex" : "flex"}`}
+          >
+            {colors.map((color) => (
+              <div
+                key={color.value}
+                className="cursor-pointer flex items-center gap-2 w-fit"
+                onClick={() =>
+                  setSelectedColors((prev) => {
+                    if (!prev.includes(color.name)) {
+                      return [...prev, color.name];
+                    } else {
+                      return prev.filter((c) => c !== color.name);
+                    }
+                  })
+                }
+              >
+                <input
+                  type="checkbox"
+                  name=""
+                  id=""
+                  className="cursor-pointer"
+                  checked={selectedColors.includes(color.name)}
+                  readOnly
+                />
+                <label className="cursor-pointer">{color.name}</label>
+              </div>
+            ))}
+          </div>
+          <div
+            className={`md:hidden md:flex-col gap-2 md:py-6 md:border-b-[1px] border-b-slate-200 ${selectedFilter !== "Sizes" ? "hidden md:flex" : "flex"}`}
+          >
+            {sizes.map((size) => (
+              <div
+                key={size}
+                className="cursor-pointer flex items-center gap-2 w-fit"
+                onClick={() =>
+                  setSelectedSizes((prev) => {
+                    if (!prev.includes(size)) {
+                      return [...prev, size];
+                    } else {
+                      return prev.filter((c) => c !== size);
+                    }
+                  })
+                }
+              >
+                <input
+                  type="checkbox"
+                  name=""
+                  id=""
+                  className="cursor-pointer"
+                  checked={selectedSizes.includes(size)}
+                  readOnly
+                />
+                <label className="cursor-pointer">{size}</label>
+              </div>
+            ))}
+          </div>
+          <Accordion className="hidden md:block" type="single" collapsible>
+            <AccordionItem value="item-1">
+              <AccordionTrigger className="font-semibold">
+                Color
+              </AccordionTrigger>
+              <AccordionContent className="flex md:flex-col gap-2">
+                {colors.map((color) => (
+                  <div
+                    key={color.value}
+                    className="cursor-pointer flex items-center gap-2 w-fit"
+                    onClick={() =>
+                      setSelectedColors((prev) => {
+                        if (!prev.includes(color.name)) {
+                          return [...prev, color.name];
+                        } else {
+                          return prev.filter((c) => c !== color.name);
+                        }
+                      })
+                    }
+                  >
+                    <input
+                      type="checkbox"
+                      name=""
+                      id=""
+                      className="cursor-pointer"
+                      checked={selectedColors.includes(color.name)}
+                      readOnly
+                    />
+                    <label className="cursor-pointer">{color.name}</label>
+                  </div>
+                ))}
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2">
+              <AccordionTrigger className="font-semibold">
+                Size
+              </AccordionTrigger>
+              <AccordionContent className="flex md:flex-col gap-2">
+                {sizes.map((size) => (
+                  <div
+                    key={size}
+                    className="cursor-pointer flex items-center gap-2 w-fit"
+                    onClick={() =>
+                      setSelectedSizes((prev) => {
+                        if (!prev.includes(size)) {
+                          return [...prev, size];
+                        } else {
+                          return prev.filter((c) => c !== size);
+                        }
+                      })
+                    }
+                  >
+                    <input
+                      type="checkbox"
+                      name=""
+                      id=""
+                      className="cursor-pointer"
+                      checked={selectedSizes.includes(size)}
+                      readOnly
+                    />
+                    <label className="cursor-pointer">{size}</label>
+                  </div>
+                ))}
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+          <div className="hidden md:flex flex-col gap-3 py-4 border-b ">
+            <h2 className="font-semibold">Search</h2>
+            <input
+              type="text"
+              placeholder="Product name"
+              className="border border-slate-300 px-3 py-2 rounded-md text-sm placeholder:font-light outline-none transition-all focus:border-slate-500 w-full"
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-6 pt-4 pb-8 md:py-6 md:w-5/6">
           {isLoading ? (
             Array(8)
               .fill(0)
               .map((_, index) => (
                 <div key={index} className="w-full animate-pulse">
-                  <div className="h-[400px] bg-gray-200 rounded-lg"></div>
+                  <div className="h-[400px] bg-gray-100 rounded-lg"></div>
                   <div className="mt-3 flex justify-between">
-                    <div className="w-1/2 h-4 bg-gray-200 rounded"></div>
-                    <div className="w-1/4 h-4 bg-gray-200 rounded"></div>
+                    <div className="w-1/2 h-4 bg-gray-100 rounded"></div>
+                    <div className="w-1/4 h-4 bg-gray-100 rounded"></div>
                   </div>
                 </div>
               ))
