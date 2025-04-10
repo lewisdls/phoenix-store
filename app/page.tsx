@@ -6,7 +6,7 @@ import { imageUrl } from "@/lib/imgUrl";
 import { Category, Header, Product } from "@/sanity.types";
 import { getCategories, getHeaders, getProducts } from "@/sanity/lib/api";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -14,6 +14,9 @@ export default function Home() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [headers, setHeaders] = useState<Header[]>([]);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const maxSlide = headers.length;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,6 +31,28 @@ export default function Home() {
     };
     fetchData();
   }, []);
+
+  const resetTimer = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % maxSlide);
+    }, 3000);
+  };
+
+  useEffect(() => {
+    resetTimer();
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    resetTimer();
+  }, [currentSlide]);
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
 
   return (
     <div>
@@ -86,17 +111,15 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center justify-center gap-3 w-full">
-              {headers.map((header, index) => (
-                <div
-                  key={header._id}
-                  className={`mt-4 w-5 h-5 rounded-full border ${
-                    currentSlide === index && "border-black"
-                  } flex items-center justify-center cursor-pointer`}
-                  onClick={() => setCurrentSlide(index)}
-                >
-                  <div className={`w-3 h-3 rounded-full bg-slate-500`}></div>
-                </div>
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+              {headers.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`w-3 h-3 rounded-full ${
+                    currentSlide === index ? "bg-black" : "bg-gray-400"
+                  }`}
+                />
               ))}
             </div>
           </div>
