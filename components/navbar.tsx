@@ -8,7 +8,7 @@ import { useState } from "react";
 const Navbar = () => {
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
   return (
-    <div className="sticky top-0 bg-white z-50 flex items-center justify-between py-6 px-4 md:px-8 shadow-sm">
+    <div className="sticky top-0 bg-white z-30 flex items-center justify-between py-6 px-4 md:px-8 shadow-sm">
       <div className="flex gap-6">
         <Link href="/" className="font-semibold">
           Home
