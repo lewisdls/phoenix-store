@@ -16,8 +16,6 @@ export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const maxSlide = headers.length;
-
   useEffect(() => {
     const fetchData = async () => {
       const products = await getProducts();
@@ -32,22 +30,27 @@ export default function Home() {
     fetchData();
   }, []);
 
-  const resetTimer = () => {
+  const startAutoSlide = () => {
     if (intervalRef.current) clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % maxSlide);
+      setCurrentSlide((prev) => (prev + 1) % headers.length);
     }, 3000);
   };
 
   useEffect(() => {
-    resetTimer();
+    if (headers.length > 0) {
+      startAutoSlide();
+    }
+
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, []);
+  }, [headers]);
 
   useEffect(() => {
-    resetTimer();
+    if (headers.length > 0) {
+      startAutoSlide();
+    }
   }, [currentSlide]);
 
   const goToSlide = (index: number) => {
