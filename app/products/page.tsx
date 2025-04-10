@@ -140,7 +140,7 @@ export default function Products() {
   }, [router]);
 
   return (
-    <div className="flex flex-col px-8 my-4">
+    <div className="flex flex-col my-4 px-4 md:px-8">
       <div className="flex items-center justify-between gap-10 pb-4 border-b-[1px] border-b-slate-300">
         <h1 className="text-4xl">All Products</h1>
         <DropdownMenu>
