@@ -11,6 +11,9 @@ import { imageUrl } from "@/lib/imgUrl";
 import ProductCard from "@/components/productCard";
 import { getColorsHex } from "@/lib/colorByHex";
 
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/lib/cartSlice";
+
 const sizes = ["Small", "Medium", "Large"];
 
 export default function Product() {
@@ -28,6 +31,8 @@ export default function Product() {
     )?.images?.[0];
     return firstImage ? imageUrl(firstImage).url() : ""; // Call imageUrl only if `firstImage` is valid
   });
+
+  const dispatch = useDispatch();
 
   const isInStock = (size: string, color: string) => {
     return product?.versions?.find((item) => {
@@ -305,6 +310,20 @@ export default function Product() {
                 )}
                 <div className="flex items-center gap-4 mt-6 font-medium">
                   <button
+                  onClick={() => {
+                    if (!selectedSize || !selectedColor) return;
+                    dispatch(
+                      addToCart({
+                        id: product!._id,
+                        title: product!.title || "",
+                        price: product!.price,
+                        image: mainImg,
+                        size: selectedSize,
+                        color: selectedColor,
+                        quantity: counter,
+                      })
+                    );
+                  }}
                     className={`flex items-center gap-2 py-3 px-6 bg-blue-500  text-white rounded-md transition-all ${
                       selectedSize === ""
                         ? "bg-blue-300 cursor-not-allowed"
